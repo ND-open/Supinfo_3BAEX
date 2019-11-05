@@ -1,0 +1,81 @@
+---
+title: "activité rapide 1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+Donnez la traduction puis la définition des mots suivants : mean, variance, median, standard deviation, interquartile range, quantile, mode, repartion function and distribution.
+
+* a) Traduction
+
+```{r}
+en_stats <- c("mean", "variance", "median", "standard deviation", "interquartile range", "quantile", "mode", "repartion function", "distribution")
+
+fr_stats <- c("moyenne", "variance", "médiane", "écart type", "écart interquartile", "quantile", "mode", "fonction de répartion", "distribution / densité")
+
+rep1 <- data.frame(en_stats, fr_stats)
+knitr::kable(rep1)
+
+```
+
+* b) Definition
+
+On se donne un échantillon de 100 individus issus d'une variable aléatoire réelle : 
+
+```{r}
+set.seed(123)
+samp <- rnorm(100)
+samp
+
+mean(samp)
+sum(samp)/length(samp)
+
+var(samp)
+
+library(ggplot2)
+library(dplyr)
+
+samp %>% tibble::as_tibble() %>% 
+        ggplot(. ,aes(x = 1:100, y = value)) + 
+        geom_point() +
+        geom_hline(yintercept = 0, color = "red") +
+        geom_hline(yintercept = 0 + sqrt(var(samp)), color = "blue") +
+        geom_hline(yintercept = 0 - sqrt(var(samp)), color = "blue")
+        
+# densité
+samp %>% tibble::as_tibble() %>% 
+        ggplot(. ,aes(x = value)) +
+        geom_density()
+        # geom_histogram()
+
+
+samp %>% tibble::as_tibble() %>% 
+        mutate(cumfreq = value)
+        ggplot(. ,aes( cumsum(order(value)) ) ) +
+        geom_density()
+```
+
+
+
+
+
+```{r}
+
+utils::data()
+getwd() # get working directory
+
+setwd(dir = "/data")
+dir.create(path = "data")
+
+write.csv(x = iris, file = "iris.csv")
+nom_de_mon_dataframe <- read.csv(file = "iris.csv")
+
+str(dframe)
+```
+
+
