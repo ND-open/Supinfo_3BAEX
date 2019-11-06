@@ -1,0 +1,86 @@
+---
+title: "decathlon pca"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installation des library et chargement des données
+
+Nous allons utiliser les library Factominer et factoextra
+
+```{r}
+
+# Pour faire des rapports
+install.packages("knitr")
+
+# install.packages("Factominer")
+# factoextra
+
+library(FactoMineR)
+library(factoextra)
+# factoextra
+```
+
+```{r}
+data("decathlon2")
+decathlon2
+```
+
+## Stat descriptives
+
+```{r}
+# summary()
+
+# library(ggplot2)
+
+```
+
+
+## PCA
+
+```{r}
+library(dplyr)
+
+df_pca <- decathlon2[1:23, 1:10]
+df_pca
+# decathlon2 %>% 
+        # slice(1:23) %>% 
+        # select()
+```
+
+```{r}
+mod_pca <- FactoMineR::PCA(df_pca)
+mod_pca
+```
+
+
+
+```{r}
+# print(mod_pca)
+
+get_eigenvalue(mod_pca)
+fviz_eig(mod_pca)
+
+```
+
+
+```{r}
+get_pca_ind(mod_pca)
+get_pca_var(mod_pca)$cos2
+
+fviz_pca_ind(mod_pca)
+fviz_pca_var(mod_pca)
+
+fviz_pca_biplot(mod_pca)
+fviz_pca_biplot(mod_pca, axes = c(1,3))
+fviz_pca_biplot(mod_pca, axes = c(1,4))
+
+fviz_pca_biplot(mod_pca, axes = c(2,4))
+
+fviz_pca_var(mod_pca, axes = c(2,4))
+
+```
+

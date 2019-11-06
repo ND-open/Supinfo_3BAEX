@@ -1,0 +1,124 @@
+---
+title: "Activité rapide jour1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Questions
+
+Donnez la traduction puis la définition des mots suivants : 
+
+mean, variance, median, standard deviation, interquartile range, quantile, mode, repartion function and distribution.
+
+### a) Traduction
+
+```{r}
+en_stats <- c("mean", "variance", "median", "standard deviation", "interquartile range", "quantile", "mode", "repartion function", "distribution")
+
+fr_stats <- c("moyenne", "variance", "médiane", "écart type", "écart interquartile", "quantile", "mode", "fonction de répartion", "distribution / densité")
+
+rep1 <- tibble::tibble("`stat (en)`" = en_stats, "`stat (fr)`" = fr_stats)
+knitr::kable(rep1)
+
+```
+
+### b) Definition
+
+On se donne un échantillon de 100 individus issus d'une variable aléatoire réelle (suivant ici une loi normale centrée (moyenne nulle) réduite (variance égale à 1) : 
+
+```{r, warning=FALSE}
+set.seed(123) # fixe la graine aléatoire pour que les résultats soient toujours les même
+samp <- rnorm(n = 100) # génère un échantillon de taille 100
+# samp
+
+# moyenne
+mean(samp)
+sum(samp)/length(samp)
+
+# variance
+var(samp)
+sum( (samp-mean(samp))**2 ) / (length(samp) - 1)
+```
+
+
+
+```{r}
+suppressPackageStartupMessages( library(ggplot2) )
+suppressPackageStartupMessages( library(dplyr) )
+
+data_sample <- tibble::tibble(individus = 1:100, samp)
+data_sample
+
+# Scatter plot - graphique des points
+data_sample %>% 
+        ggplot(. , aes(x = individus, y = samp)) + 
+        geom_point() +
+        geom_hline(yintercept = 0, color = "red") +
+        geom_hline(yintercept = 0 + sqrt(var(samp)), color = "blue") +
+        geom_hline(yintercept = 0 - sqrt(var(samp)), color = "blue")
+        
+# Densité
+data_sample %>% 
+        ggplot(. ,aes(x = samp)) +
+        geom_density()
+        # geom_histogram()
+
+# Fonction de répartiton
+# samp %>% tibble::as_tibble() %>% 
+#         mutate(cumfreq = samp)
+#         ggplot(. ,aes( cumsum(order(samp)) ) ) +
+#         geom_density()
+```
+
+
+
+## Fonctionnalités utiles pour effectuer des opérations de bases
+
+
+Pour afficher les jeux de donnés disponibles :
+
+```{r}
+utils::data()
+```
+
+Récupérer le chemin vers le dossier de travail (get working directory) :
+
+```{r}
+getwd()
+```
+
+Modifier le chemin vers le dossier de travail (set working directory) :
+
+```{r, eval=FALSE}
+setwd(dir = "some_path_to_working_directory")
+```
+
+Créer un dossier :
+
+```{r, eval=FALSE}
+dir.create(path = "data")
+```
+
+Ecrire un csv à partir d'un dataframe (ici `iris` est un jeu de donné présent dans R dans un des packages de base, on peut donc le charger directement) :
+
+```{r, eval=FALSE}
+write.csv(x = iris, file = "iris.csv")
+```
+
+Lire un csv selon un chemin donné (ici le csv se trouve dans le dossier de travail) puis examiner la structure des données chargées (str <-> structure) :
+
+```{r}
+nom_de_mon_dataframe <- read.csv(file = "iris.csv")
+str(nom_de_mon_dataframe)
+```
+
+
+## To Do pour compléter ce doc
+
+* ajouter les formules R / Excel dans le tableau
+* ajouter les formules et définition mathématiques des stats
+* mentionner la fonctionnalité créer un projet (pour éviter les pb de `setwd`)
+
