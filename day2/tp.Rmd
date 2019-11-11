@@ -1,0 +1,24 @@
+---
+title: "Practice"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+x <- c(4, 6, 3, 5, 1, 9)
+
+2 - and with a data frame
+
+fr<-data.frame(x = c(4, 6, 3, 5, 1, 9), y = c(8, 11, 5, 10, 3, 17), z = c("a", "a", "b", "a", "b", "a"))
+
+3 - Draw the graph with the line using plot function
+
+4 - Interpret the object, of class "lm", returned by lm and explain his attributes: lin <- lm (y ~ x, fr), fr is the frame above
+```
+
+

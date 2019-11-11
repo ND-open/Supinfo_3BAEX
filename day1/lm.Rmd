@@ -1,0 +1,70 @@
+---
+title: "Linear Regression with R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load library then data from Excel
+
+
+```{r, warning=FALSE}
+library(ggplot2)
+suppressPackageStartupMessages( library(dplyr) ) # to remove all messages at package start up
+library(readxl)
+ex1 <- read_excel("ex1.xlsx")
+```
+
+
+## Graphic linear regression
+
+The use of `ggplot2::geom_smooth()` (the function `geom_smooth()` coming from the package `ggplot2`) to visualize the result of a linear regression and of the confidence intervals :
+
+```{r}
+ex1 %>% 
+        ggplot(. , aes(x = deckchairs, y = recipe)) +
+        geom_point() +
+        geom_smooth(method = "lm")
+```
+
+
+## Under the hood, the use of `stats::lm` based on a Fortran routine
+
+
+```{r}
+fit <- lm(recipe ~ deckchairs, data = ex1)
+fit
+```
+
+To access more information and statisitics :
+
+```{r}
+summary(fit)
+```
+
+
+## Predict future points
+
+```{r}
+pred <- predict.lm(object = fit)
+ex1$pred <- pred
+ex1 %>% 
+        tidyr::pivot_longer(. , cols = c("recipe", "pred"), 
+                            names_to = "val_réelle/prédiction", values_to = "recipe" ) %>%  
+        ggplot(. , aes(x = deckchairs, y = recipe, colour = `val_réelle/prédiction`) ) +
+        geom_point() +
+        geom_line()
+```
+
+
+The Root Mean Square Error (RMSE) is a common way to estimate the quality of prediction. The error for each prediction $\hat x$ of a real value $x$ is $(x - \hat x)^2$. The global error is estimated as the mean distance (euclidean) to a real value and is calculated as follow :
+
+$$ \sqrt( (x_1 - \hat x_1)^2 + ... + (x_n- \hat x_1)^2)/n ) $$
+
+```{r}
+sqrt( mean((pred - ex1$recipe)**2) )
+```
+
+
