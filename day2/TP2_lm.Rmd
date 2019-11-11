@@ -1,0 +1,102 @@
+---
+title: "TP2 : Linear Regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Basic linear regression
+
+Let $x_1$ and $x_2$ be 2 explanatory variables and $y$ the dependent variable. $\epsilon$ (espilon) the error of  prediction (supposed to be a random variable). We modelise $y = b_0 + b_1x_1 + b_2x_2 + \epsilon$. The question is how to find the best coefficients $b_0$, $b_1$ and $b_2$ to minimize the error of modelisation : $(y - \hat y)^2$ with $\hat y$ the calculated estimation of $y$ by $\hat y = b_0 + b_1x_1 + b_2x_2$.
+
+The function `lm` of R makes it possible to calculate the linear regression of a numerical dependent variable as a function of explanatory variables (here $y = f(x_1, x_2) + \epsilon$).
+
+#### 1 - Use `lm` on a simple example
+
+You can use the help panel (or press F1 with the word selection) to fetch R's help documentation.
+
+Here the formula is reduced to $y = b_0 + b_1x + \epsilon$.
+
+```{r}
+x <- c(4, 6, 3, 5, 1, 9)
+y <- 2 * x + 1 + rnorm(6, 0, 0.3)
+```
+
+
+#### 2 - With a data frame
+
+```{r}
+fr <- data.frame(x = c(4, 6, 3, 5, 1, 9), y = c(8, 11, 5, 10, 3, 17), z = c("a", "a", "b", "a", "b", "a"))
+```
+
+
+#### 3 - Draw the graph with the line using plot function
+
+```{r}
+
+```
+
+
+#### 4 - Interpret the object, of class "lm"
+
+```{r}
+
+```
+
+#### 5 - Give the confidence interval on the coefficients, with alpha = 0.95
+
+```{r}
+
+```
+
+
+#### 6 - Prediction of values
+The predict function returns a vector of the predicted values (names of the explanatory variables must be the same in the data frame).
+
+```{r}
+
+```
+
+
+#### 7 - Plot the confidence intervals (of the predicted values)
+
+```{r}
+
+```
+
+
+#### 8 - Goodness of the model
+
+Calculate the mean square error and comment on its meaning.
+
+```{r}
+
+```
+
+#### 9 - Plot the coefficients interval of confidence
+
+```{r}
+
+```
+
+
+## Using the diamond data
+
+A common method of machine learning is to use a train sample to train the algorithm and then to evaluate the goodness of the model on a test sample.
+
+Use the following train and test sample from the `diamonds` dataset to predict the `price` of a diamond in function of its `carat` and `clarity` value.
+
+
+```{r}
+diamonds <- ggplot2::diamonds
+# str(diamonds)
+set.seed(123)
+sample_index <- sample(x = 1:nrow(diamonds), size = floor(0.8*nrow(diamonds)), replace = FALSE)
+train <- diamonds[sample_index , ]
+test <- diamonds[-sample_index , ]
+# str(train)
+# str(test)
+```
+
