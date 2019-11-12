@@ -1,0 +1,183 @@
+---
+title: "Précision sur le Blended cours"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Meta-analysis for Data Science and Business Analytics
+
+* 1) Why do we need for standard measure ?
+
+A - to avoid effect size
+
+B - to calculate the mean
+
+C - to calculate standard deviation
+
+
+```{r}
+# Casser le nombre d'individus par classe
+table(iris$Species)
+df_desequilibre<- iris[1:101 , ]
+table(df_desequilibre$Species)
+
+library(dplyr)
+df_desequilibre %>% 
+        as_tibble() %>% 
+        group_by(Species) %>% 
+        summarise_if(is.numeric, mean)
+```
+
+
+```{r}
+iris %>% 
+        as_tibble() %>% 
+        group_by(Species) %>% 
+        summarise_if(is.numeric, mean)
+
+```
+
+```{r}
+# la grandeur (moyenne) des variables et la variance
+```
+
+
+
+* 2) Suppose that you wanted to test the difference between men's heights in inches and women's height in inches to quantify the effect of gender on height. 
+
+In this case, what are the independent and dependent variables?
+
+A - Gender (independent) and Height (dependent)
+
+B - Gender (dependent) and Height (independent)
+
+C - None of the above
+
+
+* 3) Suppose that you wanted to test the difference between men's heights in inches women's height in inches to quantify the effect of gender on height. 
+
+Can we use, in this case, an analysis of the variance to explain the difference in the mean height in men and women?
+
+
+## Business Analytics Foundations - Predictive, Prescriptive, and Experimental Analytics
+
+* Dashboards/reports and Exploratory Analytics belong to :
+
+A - Business Intelligence
+
+B - Business Analytics
+
+C - Belong to both
+
+ 
+* Machine Learning and Statistical Modeling  belong to :
+
+A - Business Intelligence
+
+B - Business Analytics
+
+C - Belong to both
+
+
+* How many stages of Business Analytics?
+
+A - 3
+
+B - 4
+
+C - 5
+
+D - 6
+
+ 
+* To make prediction, we need  a large quantity of data and :
+
+A - Historical data
+
+B- Statistics
+
+C - Machine Learning
+
+D - All of  the above
+
+ 
+* The goal of Prescriptive Analytics is to explain :
+
+A - How do I take Advantage?
+
+B - What will Happen?
+
+C - Why did it Happen?
+
+ 
+* The goal of Experimental Analytics is to understand actual performance by testing
+
+ a hypothesis or an alternative
+ 
+ A - True
+ 
+ B - False
+
+
+```{r}
+f <- rnorm(100, 60, 10)
+h <- rnorm(100, 70, 10)
+library(dplyr)
+dd <- tibble("f" = f, "h" = h)
+
+```
+
+```{r}
+dd2 <- dd[1:70 , ]
+
+summary(dd2)
+
+library(ggplot2)
+dd2 %>% 
+        tidyr::pivot_longer(. , cols = c("f", "h")) %>%
+        ggplot(. , aes(x = value, color = name)) +
+        geom_density()
+```
+ 
+ 
+ 
+```{r}
+dd2 %>% 
+        tidyr::pivot_longer(. , cols = c("f", "h")) %>%
+        ggplot(. , aes(y = value, color = name)) +
+        geom_boxplot()
+```
+ 
+ 
+ 
+```{r}
+
+# en appliquant la règle de Kévin taille < 65 => Genre = Femme
+table(dd2[dd2$f <65 | dd2$h < 65, ] )
+sum(dd2$f <65)
+sum(dd2$h < 65)
+
+str(dd2)
+
+sum(dd2$f >= 65)
+sum(dd2$h >= 65)
+
+```
+
+
+```{r}
+d_exp <- dd[71:100 , ]
+# str(dd)
+
+sum(d_exp$f <65)
+sum(d_exp$h < 65)
+sum(d_exp$f >= 65)
+sum(d_exp$h >= 65)
+
+```
+
+
+##

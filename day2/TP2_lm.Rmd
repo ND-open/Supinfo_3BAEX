@@ -20,8 +20,36 @@ You can use the help panel (or press F1 with the word selection) to fetch R's he
 Here the formula is reduced to $y = b_0 + b_1x + \epsilon$.
 
 ```{r}
+set.seed(123)
 x <- c(4, 6, 3, 5, 1, 9)
+x <- sort(x)
 y <- 2 * x + 1 + rnorm(6, 0, 0.3)
+
+plot(x, y, type = "b")
+```
+
+
+```{r}
+fit <- lm(formula = y ~ x)
+fit
+```
+
+L'estimation linéaire obtenue est $y = 0.7956 + 2.0725 \times x$.
+
+```{r}
+# plot(fit)
+
+plot(x, y, type = 'b')
+lines(x, fit$coefficients[1] + fit$coefficients[2]*x, type = 'b', pch = 2, lty = 2, col=2)
+```
+
+
+```{r}
+library(ggplot2)
+
+ggplot(data = data.frame(x, y), aes(x, y)) +
+        geom_point() +
+        geom_smooth(method = "lm")
 ```
 
 
@@ -29,11 +57,20 @@ y <- 2 * x + 1 + rnorm(6, 0, 0.3)
 
 ```{r}
 fr <- data.frame(x = c(4, 6, 3, 5, 1, 9), y = c(8, 11, 5, 10, 3, 17), z = c("a", "a", "b", "a", "b", "a"))
+
+plot(fr$x, fr$y)
+```
+
+
+```{r}
+fit2 <- lm(y ~ x + z , data = fr)
+fit2
 ```
 
 
 #### 3 - Draw the graph with the line using plot function
 
+--> cf avant
 ```{r}
 
 ```
@@ -41,11 +78,22 @@ fr <- data.frame(x = c(4, 6, 3, 5, 1, 9), y = c(8, 11, 5, 10, 3, 17), z = c("a",
 
 #### 4 - Interpret the object, of class "lm"
 
+cf formule
 ```{r}
 
 ```
 
 #### 5 - Give the confidence interval on the coefficients, with alpha = 0.95
+
+On utilise l'estimation de l'interval (Gaussien) de confiance IC = [moyenne - 3 écart type, moyenne - 3 écart type] 
+
+```{r}
+summary(fit)
+# sum_fit <- summary(fit)
+# names(fit)
+# names(sum_fit)
+```
+
 
 ```{r}
 
@@ -63,16 +111,37 @@ The predict function returns a vector of the predicted values (names of the expl
 #### 7 - Plot the confidence intervals (of the predicted values)
 
 ```{r}
-
+y_pred <- predict.lm(fit, newdata = data.frame(x), se.fit = TRUE )
+# plot(x, y_pred)
+# sigma <- sd()
+# ic <- c(mean(y))
+# plot(y_pred, se.fit = TRUE)
+# plot(y_pred)
+new <- data.frame(x)
+# predict(lm(y ~ x), new, se.fit = TRUE)
+# pred.w.plim <- predict(lm(y ~ x), new, interval = "prediction")
+pred.w.clim <- predict(lm(y ~ x), new, interval = "confidence")
+matplot(new$x, cbind(pred.w.clim),
+        lty = c(1,2,2,3,3), type = "l", ylab = "predicted y")
 ```
 
 
 #### 8 - Goodness of the model
 
+```{r}
+summary(fit)
+```
+
+Le R² (R-squared) est de 0.9987 ce qui réflète une très bonne modélisation.
+
+
+
 Calculate the mean square error and comment on its meaning.
 
-```{r}
+RMSE:
 
+```{r}
+sqrt( mean( (y_pred$fit - y)**2 ) )
 ```
 
 #### 9 - Plot the coefficients interval of confidence

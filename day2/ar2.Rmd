@@ -1,0 +1,28 @@
+---
+title: "Activité Rapide 2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Calculs
+
+Soit un échantillon $X = \{1, 1, 2, 2, 2, 3\}$
+
+Calculez les statistiques suivantes :
+
+  * la moyenne
+  * la variance
+  * l'écart type
+  * le mode
+  
+Réponse :
+
+
+Avec R :
+
+```{r}
+
+```
