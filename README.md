@@ -40,6 +40,10 @@ Plusieurs options sont possibles :
       - `lm.R` est le script pour le modèle linéaire pour l’exercice 1
         du TP
       - `decat_pca` est le rapport de l’excercice 2
-      - à venir l’exercice 3 avec le script excel pour la PCA
+      - l’exercice 3 avec le script excel pour la PCA
 
 ### Jour 2
+
+  - `ar2`
+  - `retour_blended`
+  - `TP2_lm`
