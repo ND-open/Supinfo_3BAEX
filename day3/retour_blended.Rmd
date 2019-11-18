@@ -1,0 +1,66 @@
+---
+title: "Forcast with R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Exponential smoothing using Excel
+
+cf file `02_03.xlsx`
+
+
+## Analysis with packages `Desctools` and `stats` 
+
+Select the wanted data from excel and import it in R using the following code :
+
+
+```{r}
+# DescTools::XLGetRange(header = TRUE) # not working in R 3.6
+data_ts <- readxl::read_excel(path = "04_03.xlsx", col_names = c("rows", "Customers", "Forecasted Customers", "Error", "Squared Error", 6:8), skip = 2, trim_ws = TRUE)
+data_ts
+```
+
+One way to perform exponential smoothing in R is with the function HoltWinter :
+
+
+```{r}
+fit <- stats::HoltWinters(x = na.omit(data_ts$Customers), beta = FALSE, gamma = FALSE, l.start = 472)
+fit
+```
+
+```{r}
+plot(fit)
+```
+
+
+## More examples
+
+
+* ts object in R
+
+```{r}
+z <- c(123,39,78,52,110)
+# ts(z, start = 2012, frequency = 12)
+# y <- ts(z, start = 2012)
+# y
+```
+
+
+* training data
+
+```{r}
+AirPassengers
+str(AirPassengers)
+plot(AirPassengers)
+```
+
+
+```{r}
+plot( stats::HoltWinters(AirPassengers) )
+# plot( forecast::ets(AirPassengers) )
+```
+
