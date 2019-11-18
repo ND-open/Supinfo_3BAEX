@@ -28,12 +28,12 @@ One way to perform exponential smoothing in R is with the function HoltWinter :
 
 
 ```{r}
-fit <- stats::HoltWinters(x = na.omit(data_ts$Customers), beta = FALSE, gamma = FALSE, l.start = 472)
-fit
+# fit <- stats::HoltWinters(x = na.omit(data_ts$Customers), beta = FALSE, gamma = FALSE, l.start = 472)
+# fit
 ```
 
 ```{r}
-plot(fit)
+# plot(fit)
 ```
 
 
@@ -53,14 +53,14 @@ z <- c(123,39,78,52,110)
 * training data
 
 ```{r}
-AirPassengers
-str(AirPassengers)
-plot(AirPassengers)
+# AirPassengers
+# str(AirPassengers)
+# plot(AirPassengers)
 ```
 
 
 ```{r}
-plot( stats::HoltWinters(AirPassengers) )
+# plot( stats::HoltWinters(AirPassengers) )
 # plot( forecast::ets(AirPassengers) )
 ```
 
