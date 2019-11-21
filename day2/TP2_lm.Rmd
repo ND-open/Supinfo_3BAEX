@@ -159,13 +159,126 @@ Use the following train and test sample from the `diamonds` dataset to predict t
 
 
 ```{r}
+# to install pacakges
+# install.packages("ggplot2")
+# install.packages("dplyr")
+
+# --- test if installed
+library(ggplot2)
+library(dplyr)
+
 diamonds <- ggplot2::diamonds
-# str(diamonds)
+str(diamonds)
+```
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = color, y = price, color = carat)) +
+        geom_point(alpha = .2)
+# carat
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+diamonds %>% 
+        ggplot(data = ., mapping = aes(x = color, y = price)) +
+        # geom_point()
+        geom_boxplot()
+# cut
+```
+
+
+```{r}
+# plot(head(diamonds, 1e3 ) )
+# plot(diamonds)
+```
+
+### Modelisation
+
+```{r}
 set.seed(123)
 sample_index <- sample(x = 1:nrow(diamonds), size = floor(0.8*nrow(diamonds)), replace = FALSE)
 train <- diamonds[sample_index , ]
-test <- diamonds[-sample_index , ]
+# ytrain <- diamonds[sample_index , ]$price
+test <- diamonds[ - sample_index , -7]
+ytest <- diamonds[ - sample_index , ]$price
 # str(train)
 # str(test)
+
+dim(train)
+dim(test)
+```
+
+#### LM
+
+Effectuer une régression linéaire du prix en fonction de la variable `carat` :
+
+**Sur l'échantillon d'apprentissage**
+
+```{r}
+fit_d <- lm(price ~ carat + ... , data = train)
+fit_d
+```
+
+La formule obtenue : $Price = -2260 + 7761 \times Carat$ signifie : "pour chaque nouvelle unité de carat on ajoute 7761 $(€ ?) au prix d'un diamand. 
+
+Représentation graphique :
+
+```{r}
+# plot(fit_d) # pour affiner l'analyse stat
+train %>% 
+        ggplot(data = ., mapping = (aes(carat, price))) +
+        geom_point(alpha = .1) +
+        geom_smooth(method = "lm")
+```
+
+On trouve un $R^2$ de 0.8499 pour cette modélisation :
+
+```{r}
+summary(fit_d)
+```
+
+Ajouter plus de variables à la régression (formule : `~ carat + nouvelle_variable`)
+
+```{r}
+fit_d_all <- lm(price ~ . , data = train)
+fit_d_all
+```
+
+Si on augmente la dimension (avec toutes les variables) on augmente la qualité de la prévision selon le critère du $R^2$ : 0.9194
+
+```{r}
+summary(fit_d_all)
+```
+
+### Evaluer sur l'échantillon de test / faire de nouvelles prévisions
+
+```{r}
+test
+pred <- predict.lm(object = fit_d, newdata = test)
+head(pred)
+head(ytest)
+```
+
+RMSE :
+
+```{r}
+sqrt( sum((pred - ytest)**2)/length(pred))
+
+err <- pred - ytest
+# err %>% .**2 %>% sum() %>% function(x){x/length(pred)} %>% sqrt()
+```
+
+
+```{r}
+res <- data.frame(label = c(rep("pred", length(pred)), rep("real_val", length(pred))) ,value = c(pred, ytest))
+
+# res %>% 
+#         ggplot(. , aes(x = rep(1:length(pred), 2) , y = value, color = label) ) +
+#         geom_point()
 ```
 
