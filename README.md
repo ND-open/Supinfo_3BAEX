@@ -32,8 +32,6 @@ Plusieurs options sont possibles :
       - `ar1` (activité rapide 1, utiliser le `.html` pour le lire et le
         `.Rmd` pour voir le script du rapport R markdown) contient les
         informations relatives aux exercices de début de cours
-    
-      - à venir : transcript des exercices
 
   - TP (et préparation de l’examen final)
     
@@ -47,3 +45,21 @@ Plusieurs options sont possibles :
   - `ar2`
   - `retour_blended`
   - `TP2_lm`
+
+### Jour 3
+
+  - R
+      - `ar3`
+      - `retour_blended`
+  - Excel
+      - `02_03` : pour pratiquer le lissage exponentiel, par écriture de
+        l’algo et utilisation de l’addin
+    
+      - `02_03_solution`
+    
+      - `04_03` : pour utiliser le solver dans la recherche du alpha
+        optimal (pour le critère du RMSE)
+    
+      - `Forecasting_excel_td_version` : le TP officiel du full prof,
+        qui mélange plusieurs techniques de prévisions sur un cas plus
+        complexe
