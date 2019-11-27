@@ -13,23 +13,23 @@ knitr::opts_chunk$set(echo = FALSE)
   * Pour les questions, par email (cf l'email envoyé au groupe en fin de cours)
   
 
-## Accéder et importer les fichiers
+## Accéder et télécharger les fichiers
 
 Plusieurs options sont possibles :
 
-  * importer seulement les fichiers qui vous intéresse, pour cela cliquez sur ceux-ci puis vous pourrez les télécharger
+  * Importer seulement les fichiers qui vous intéressent (clic + download).
   
-  * si vous avez un compte sur Github (je vous le conseille, c'est gratuit et les étudiants ont accès à la fonctionnalité repository privé)
+  * Si vous avez un compte sur Github (je vous le conseille, c'est gratuit et les étudiants ont accès à la fonctionnalité repository privé).
   
-    + cloner le repository en entier : par ce moyen vous importez l'ensemble des fichiers et des branches
+    + Cloner le repository en entier : par ce moyen vous importez l'ensemble des fichiers et des branches.
   
-    + forker le projet sur votre espace Github
+    + Forker le projet sur votre espace Github (plus direct).
 
 
 ## Où chercher les informations et les scripts
 
 
-### Jour 1 (scripts non complets)
+### Jour 1
 
 * Préparation du Quizz
 
